@@ -30,7 +30,7 @@ Given('I want to fetch exchange data for coins', () => {
          expect(response.body).to.nested.include(
          {'data.exchanges[0].name':"Binance",
          'data.exchanges[8].name': "Bitrue",
-        'data.exchanges[21].name':"WhiteBIT"}
+         'data.exchanges[21].name':"WhiteBIT"}
 
          // expect(response.body).to.have.nested.property('data.exchanges[7].name',"BitTrue");
          // expect(response.body).to.have.nested.property('data.exchanges[22].name',"Whitebit");
