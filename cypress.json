@@ -1,0 +1,5 @@
+{
+    "baseUrl": "https://coinranking1.p.rapidapi.com",
+    "video": false,
+    "testFiles": "**/*.feature"
+  }
