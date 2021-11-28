@@ -23,7 +23,7 @@ Given('I want to fetch exchange data for coins', () => {
       });
 
 
-      Then('Verify response details for coins', () => {
+      Then('Verify response name, # of markets, volume and rank', () => {
        // cy.get('@get_exchanges').should((response)=> {
         cy.get('@get_exchanges').then((resp => {
 
