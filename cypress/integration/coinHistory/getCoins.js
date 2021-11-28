@@ -22,7 +22,7 @@ context('Network Requests', () => {
            })
           });
 
-     Then('Verify the coins history from 7 days ago to newest', () => {
+     Then('Verify the coins history from 7 days ago to the newest', () => {
         cy.get('@get_coins').then((resp) => {
            
             filterCoins(resp);
