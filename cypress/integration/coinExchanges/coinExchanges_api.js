@@ -1,3 +1,7 @@
+context('Network Requests', () => {
+
+  // Manage HTTP requests in your app
+  var myExchanges = [];
 
 Given('I want to fetch exchange data for coins', () => {
     cy.request({
@@ -11,7 +15,7 @@ Given('I want to fetch exchange data for coins', () => {
     }).as('get_exchanges')
 
 
-  Then('Verify response status code is 200', (statusCode) => {
+  When('Verifying response status code is 200', (statusCode) => {
         cy.get('@get_exchanges').should((response)=> {
         expect(response.status).to.eq(200);
           
@@ -19,44 +23,35 @@ Given('I want to fetch exchange data for coins', () => {
       });
 
 
-      And('Verify response details for coins', () => {
+      Then('Verify response details for coins', () => {
        // cy.get('@get_exchanges').should((response)=> {
-        cy.get('@get_exchanges').then((response => {
-        
-         cy.log(response.body)
-            
-           // expect(response.body).to.have.property('data');
-         
-         expect(response.body).to.nested.include(
-         {'data.exchanges[0].name':"Binance",
-         'data.exchanges[8].name': "Bitrue",
-         'data.exchanges[21].name':"WhiteBIT"}
+        cy.get('@get_exchanges').then((resp => {
 
-         // expect(response.body).to.have.nested.property('data.exchanges[7].name',"BitTrue");
-         // expect(response.body).to.have.nested.property('data.exchanges[22].name',"Whitebit");
+          filterExchanges(resp);
+          myExchanges.sort(compare);
+          myExchanges.forEach(exchange => {
+              cy.log("Exchange Name: " + exchange.name + " - # of Markets: " + exchange.numberOfMarkets + " - Volume: " + exchange.volume + " - Rank: " + exchange.rank)
+          });
 
-        
-             // var coinExchangeArray = []; 
-              //var coinExchangeObject = new Object();
-              //coinExchangeArray[0] = coinExchangeObject;
+      }));
+  });
 
-             // for (var index in response.body) {
-             // coinExchangeArray.push(response.body);
-             // }
-    
-              //cy.log(coinExchangeArray);
-              //expect(coinExchangeArray).to.include("Binance");
+  const filterExchanges = resp => {
+    resp.body.data.exchanges.forEach(exchange => {
+        if (exchange.name == "Bitrue" || exchange.name == "Binance" || exchange.name == "WhiteBIT") {
+            myExchanges.push(exchange);
+        }
+    });
+};
 
-              //let data = response;
-             // Object.keys(coinExchangeArray).forEach(id => {
-             // let Exchanges = coinExchangeArray[0];
-             // cy.log(Exchanges.name, Exchanges.volume);
-          
-            //  })
-         )    
-         }
-        )
-        )}
-      )}
-)
- 
+function compare(a, b) {
+    if (a.volume < b.volume) {
+        return -1;
+    }
+    if (a.volume > b.volume) {
+        return 1;
+    }
+    return 0;
+}
+})
+})         
