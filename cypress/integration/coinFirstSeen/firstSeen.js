@@ -17,7 +17,7 @@ context('Network Requests', () => {
         }).as('get_firstSeen')
     
     
-      When('I Verify response status code is 200', (statusCode) => {
+      When('Verifying response status code is 200', (statusCode) => {
             cy.get('@get_firstSeen').should((response)=> {
             expect(response.status).to.eq(200);
               
