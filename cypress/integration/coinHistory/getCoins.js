@@ -15,7 +15,7 @@ context('Network Requests', () => {
         }).as('get_coins')
     
     
-      When('I Verify response status code is 200', (statusCode) => {
+      When('Verifying response status code is 200', (statusCode) => {
             cy.get('@get_coins').should((response)=> {
             expect(response.status).to.eq(200);
               
